@@ -37,7 +37,7 @@ import { RegisterComponent } from './register/index';
         AlertService,
         AuthenticationService,
         UserService,
-
+        // Testing Comment
         // providers used to create fake backend
         fakeBackendProvider,
         MockBackend,
