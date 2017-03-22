@@ -15,17 +15,11 @@ require("rxjs/add/operator/map");
 var AuthenticationService = (function () {
     function AuthenticationService(http) {
         this.http = http;
+        this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
-    AuthenticationService.prototype.login = function (username, password) {
-        return this.http.post('/api/authenticate', JSON.stringify({ username: username, password: password }))
-            .map(function (response) {
-            // login successful if there's a jwt token in the response
-            var user = response.json();
-            if (user && user.token) {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
-            }
-        });
+    AuthenticationService.prototype.login = function (userName, password) {
+        return this.http.post('http://localhost:8080/customer/login', JSON.stringify({ userName: userName, password: password }), { headers: this.headers })
+            .map(function (response) { return response.json(); });
     };
     AuthenticationService.prototype.logout = function () {
         // remove user from local storage to log user out

@@ -2,9 +2,11 @@
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
 import { User } from '../_models/index';
+import { PersonalDetail } from '../_models/index';
 
 @Injectable()
 export class UserService {
+     private headers = new Headers({ 'Content-Type': 'application/json' });
     constructor(private http: Http) { }
 
     getAll() {
@@ -15,8 +17,8 @@ export class UserService {
         return this.http.get('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
     }
 
-    create(user: User) {
-        return this.http.post('/api/users', user, this.jwt()).map((response: Response) => response.json());
+    create(personalDetail: PersonalDetail) {
+        return this.http.post('http://localhost:8080/customer/register', personalDetail,{ headers: this.headers }).map((response: Response) => response.json());
     }
 
     update(user: User) {

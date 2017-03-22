@@ -30,7 +30,7 @@ var LoginComponent = (function () {
     LoginComponent.prototype.login = function () {
         var _this = this;
         this.loading = true;
-        this.authenticationService.login(this.model.username, this.model.password)
+        this.authenticationService.login(this.model.userName, this.model.password)
             .subscribe(function (data) {
             _this.router.navigate([_this.returnUrl]);
         }, function (error) {
