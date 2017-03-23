@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 
-import { User } from '../_models/index';
+import { Customer } from '../_models/index';
 import { PersonalDetail } from '../_models/index';
 
 @Injectable()
@@ -18,11 +18,11 @@ export class UserService {
     }
 
     create(personalDetail: PersonalDetail) {
-        return this.http.post('http://localhost:8080/customer/register', personalDetail,{ headers: this.headers }).map((response: Response) => response.json());
+        return this.http.post('http://localhost:8090/customer/register', personalDetail,{ headers: this.headers }).map((response: Response) => response.json());
     }
 
-    update(user: User) {
-        return this.http.put('/api/users/' + user.id, user, this.jwt()).map((response: Response) => response.json());
+    update(user: Customer) {
+        return this.http.put('/api/users/' + user.customerId, user, this.jwt()).map((response: Response) => response.json());
     }
 
     delete(id: number) {

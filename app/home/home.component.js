@@ -12,21 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var index_1 = require("../_services/index");
 var HomeComponent = (function () {
-    function HomeComponent(userService) {
+    function HomeComponent(userService, athenticationService) {
         this.userService = userService;
+        this.athenticationService = athenticationService;
         this.users = [];
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.currentUser = this.athenticationService.customer;
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.loadAllUsers();
-    };
-    HomeComponent.prototype.deleteUser = function (id) {
-        var _this = this;
-        this.userService.delete(id).subscribe(function () { _this.loadAllUsers(); });
-    };
-    HomeComponent.prototype.loadAllUsers = function () {
-        var _this = this;
-        this.userService.getAll().subscribe(function (users) { _this.users = users; });
+        this.currentUser = this.athenticationService.customer;
     };
     return HomeComponent;
 }());
@@ -35,7 +28,7 @@ HomeComponent = __decorate([
         moduleId: module.id,
         templateUrl: 'home.component.html'
     }),
-    __metadata("design:paramtypes", [index_1.UserService])
+    __metadata("design:paramtypes", [index_1.UserService, index_1.AuthenticationService])
 ], HomeComponent);
 exports.HomeComponent = HomeComponent;
 //# sourceMappingURL=home.component.js.map

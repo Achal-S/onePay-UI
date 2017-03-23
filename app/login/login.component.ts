@@ -1,22 +1,26 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
+import { Customer} from '../_models/index'
 import { AlertService, AuthenticationService } from '../_services/index';
+import { Injectable } from '@angular/core';
 
 @Component({
     moduleId: module.id,
     templateUrl: 'login.component.html'
 })
 
+
 export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
     returnUrl: string;
+    customer: Customer;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
+       
         private alertService: AlertService) { }
 
     ngOnInit() {
@@ -24,14 +28,16 @@ export class LoginComponent implements OnInit {
         this.authenticationService.logout();
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
     }
 
     login() {
         this.loading = true;
         this.authenticationService.login(this.model.userName, this.model.password)
             .subscribe(
-                data => {
+                customer => {
+                    this.customer= customer;
+this.loading = false;
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {

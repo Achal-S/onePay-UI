@@ -25,13 +25,15 @@ var LoginComponent = (function () {
         // reset login status
         this.authenticationService.logout();
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || 'home';
     };
     LoginComponent.prototype.login = function () {
         var _this = this;
         this.loading = true;
         this.authenticationService.login(this.model.userName, this.model.password)
-            .subscribe(function (data) {
+            .subscribe(function (customer) {
+            _this.customer = customer;
+            _this.loading = false;
             _this.router.navigate([_this.returnUrl]);
         }, function (error) {
             _this.alertService.error(error);
