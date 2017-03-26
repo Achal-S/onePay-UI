@@ -22,6 +22,7 @@ var index_4 = require("./_services/index");
 var index_5 = require("./home/index");
 var index_6 = require("./login/index");
 var index_7 = require("./register/index");
+var index_8 = require("./_models/index");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -33,7 +34,8 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             forms_1.FormsModule,
             http_1.HttpModule,
-            app_routing_1.routing
+            app_routing_1.routing,
+            forms_1.ReactiveFormsModule
         ],
         declarations: [
             app_component_1.AppComponent,
@@ -43,6 +45,7 @@ AppModule = __decorate([
             index_7.RegisterComponent
         ],
         providers: [
+            index_4.SharedService,
             index_3.AuthGuard,
             index_4.AlertService,
             index_4.AuthenticationService,
@@ -50,6 +53,7 @@ AppModule = __decorate([
             // Testing Comment
             // providers used to create fake backend
             index_1.fakeBackendProvider,
+            index_8.Customer,
             testing_1.MockBackend,
             http_2.BaseRequestOptions
         ],

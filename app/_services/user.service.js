@@ -11,11 +11,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
+require("rxjs/observable/of");
+require("rxjs/add/operator/share");
+require("rxjs/add/operator/map");
 var UserService = (function () {
     function UserService(http) {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
+    UserService.prototype.login = function (userName, password) {
+        var _this = this;
+        return this.http.post('http://localhost:8080/customer/login', JSON.stringify({ userName: userName, password: password }), { headers: this.headers })
+            .map(function (response) { return _this.updateSharedService(response.json()); });
+    };
     UserService.prototype.getAll = function () {
         return this.http.get('/api/users', this.jwt()).map(function (response) { return response.json(); });
     };
@@ -30,6 +38,15 @@ var UserService = (function () {
     };
     UserService.prototype.delete = function (id) {
         return this.http.delete('/api/users/' + id, this.jwt()).map(function (response) { return response.json(); });
+    };
+    UserService.prototype.logout = function () {
+        // remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+    };
+    UserService.prototype.updateSharedService = function (response) {
+        this.customer = response;
+        //this.sharedService.customer=response;
+        return this.customer;
     };
     // private helper methods
     UserService.prototype.jwt = function () {

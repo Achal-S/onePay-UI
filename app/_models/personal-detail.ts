@@ -1,3 +1,4 @@
+import { SecurityChallenge} from '../_models/index';
 export class PersonalDetail {
     idmobileNumber: string;
     firstName: string;
@@ -6,9 +7,4 @@ export class PersonalDetail {
     emailAddress: string;
     password: string;
     securityChallenge:SecurityChallenge;
-}
-export class SecurityChallenge{
-    code: string;
-    question: string;
-    answer: string;   
 }

@@ -1,6 +1,6 @@
 ﻿import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }    from '@angular/forms';
+import { FormsModule, ReactiveFormsModule}    from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 // used to create fake backend
@@ -13,17 +13,21 @@ import { routing }        from './app.routing';
 
 import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, UserService } from './_services/index';
+import { AlertService, AuthenticationService, UserService ,SharedService} from './_services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
+import { Customer } from './_models/index';
+
+
 
 @NgModule({
     imports: [
         BrowserModule,
         FormsModule,
         HttpModule,
-        routing
+        routing,
+        ReactiveFormsModule
     ],
     declarations: [
         AppComponent,
@@ -33,6 +37,7 @@ import { RegisterComponent } from './register/index';
         RegisterComponent
     ],
     providers: [
+        SharedService,
         AuthGuard,
         AlertService,
         AuthenticationService,
@@ -40,6 +45,7 @@ import { RegisterComponent } from './register/index';
         // Testing Comment
         // providers used to create fake backend
         fakeBackendProvider,
+        Customer,
         MockBackend,
         BaseRequestOptions
     ],

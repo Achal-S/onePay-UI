@@ -10,16 +10,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var index_1 = require("../_services/index");
+var index_1 = require("../_models/index");
+var index_2 = require("../_services/index");
 var HomeComponent = (function () {
-    function HomeComponent(userService, athenticationService) {
+    function HomeComponent(userService, sharedService, athenticationService, responseCustomer) {
         this.userService = userService;
+        this.sharedService = sharedService;
         this.athenticationService = athenticationService;
+        this.responseCustomer = responseCustomer;
         this.users = [];
-        this.currentUser = this.athenticationService.customer;
     }
     HomeComponent.prototype.ngOnInit = function () {
-        this.currentUser = this.athenticationService.customer;
+        this.currentUser = this.sharedService.customer;
     };
     return HomeComponent;
 }());
@@ -28,7 +30,8 @@ HomeComponent = __decorate([
         moduleId: module.id,
         templateUrl: 'home.component.html'
     }),
-    __metadata("design:paramtypes", [index_1.UserService, index_1.AuthenticationService])
+    __metadata("design:paramtypes", [index_2.UserService, index_2.SharedService, index_2.AuthenticationService,
+        index_1.Customer])
 ], HomeComponent);
 exports.HomeComponent = HomeComponent;
 //# sourceMappingURL=home.component.js.map

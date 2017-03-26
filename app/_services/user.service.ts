@@ -1,13 +1,24 @@
 ﻿import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
-
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/observable/of';
+import 'rxjs/add/operator/share';
+import 'rxjs/add/operator/map'
 import { Customer } from '../_models/index';
-import { PersonalDetail } from '../_models/index';
+import { PersonalDetail ,Address} from '../_models/index';
+import { SharedService } from '../_services/index';
 
 @Injectable()
 export class UserService {
      private headers = new Headers({ 'Content-Type': 'application/json' });
     constructor(private http: Http) { }
+   //  sharedService= new SharedService();
+    public customer:Customer;
+    
+    login(userName: string, password: string) : Observable<Customer> {
+        return this.http.post('http://localhost:8080/customer/login', JSON.stringify({ userName: userName, password: password }),{ headers: this.headers })
+        .map((response: Response) => this.updateSharedService(response.json()));
+    }
 
     getAll() {
         return this.http.get('/api/users', this.jwt()).map((response: Response) => response.json());
@@ -29,6 +40,17 @@ export class UserService {
         return this.http.delete('/api/users/' + id, this.jwt()).map((response: Response) => response.json());
     }
 
+    logout() {
+        // remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+    }
+ updateSharedService(response:Customer){
+    this.customer=response;
+    //this.sharedService.customer=response;
+    return this.customer;
+
+
+}
     // private helper methods
 
     private jwt() {

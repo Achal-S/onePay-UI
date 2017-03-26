@@ -6,10 +6,4 @@ var PersonalDetail = (function () {
     return PersonalDetail;
 }());
 exports.PersonalDetail = PersonalDetail;
-var SecurityChallenge = (function () {
-    function SecurityChallenge() {
-    }
-    return SecurityChallenge;
-}());
-exports.SecurityChallenge = SecurityChallenge;
 //# sourceMappingURL=personal-detail.js.map

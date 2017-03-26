@@ -3,7 +3,7 @@
 import { User } from '../_models/index';
 import { Customer } from '../_models/index';
 import {LoginComponent} from '../login/index';
-import { UserService,AuthenticationService } from '../_services/index';
+import { UserService,AuthenticationService,SharedService } from '../_services/index';
 
 @Component({
     moduleId: module.id,
@@ -14,13 +14,14 @@ export class HomeComponent implements OnInit {
     currentUser: Customer;
     users: Customer[] = [];
 
-    constructor(private userService: UserService , private athenticationService: AuthenticationService) {
-        this.currentUser = this.athenticationService.customer;
+    constructor(private userService: UserService ,private sharedService:SharedService, private athenticationService: AuthenticationService,
+    
+    private responseCustomer:Customer) {
 
     }
 
     ngOnInit() {
-        this.currentUser = this.athenticationService.customer;
+        this.currentUser = this.sharedService.customer;
     }
 
     // deleteUser(id: number) {

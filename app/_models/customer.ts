@@ -1,9 +1,12 @@
-import { PersonalDetail } from '../_models/index';
+import { PersonalDetail ,Address} from '../_models/index';
+
  export class Customer {
-    customerId: string;
-    dateCreated: string;
-    lastUpdated: string;
-    password: string;
-    personalDetail: PersonalDetail;
+    public customerId: string;
+    public dateCreated: string;
+    public lastUpdated: string;
+    public password: string;
+   public personalDetail: PersonalDetail;
+   public paymentCards: any[];
+    public shippingDestination: Address[];
     
 }

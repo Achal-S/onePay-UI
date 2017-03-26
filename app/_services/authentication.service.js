@@ -12,29 +12,27 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/map");
-var index_1 = require("../_models/index");
 var AuthenticationService = (function () {
-    function AuthenticationService(http, customer) {
+    function AuthenticationService(http) {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
     }
     AuthenticationService.prototype.login = function (userName, password) {
-        var _this = this;
-        return this.http.post('http://localhost:8090/customer/login', JSON.stringify({ userName: userName, password: password }), { headers: this.headers })
-            .map(function (response) { return _this.update(response.json()); });
+        return this.http.post('http://localhost:8080/customer/login', JSON.stringify({ userName: userName, password: password }), { headers: this.headers })
+            .map(function (response) { return response.json(); });
     };
     AuthenticationService.prototype.logout = function () {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     };
-    AuthenticationService.update = function (responseJson) {
-        this.customer = responseJson;
+    AuthenticationService.prototype.updateCustomer = function (String) {
+        this.customer = String;
     };
     return AuthenticationService;
 }());
 AuthenticationService = __decorate([
     core_1.Injectable(),
-    __metadata("design:paramtypes", [http_1.Http, index_1.Customer])
+    __metadata("design:paramtypes", [http_1.Http])
 ], AuthenticationService);
 exports.AuthenticationService = AuthenticationService;
 //# sourceMappingURL=authentication.service.js.map
