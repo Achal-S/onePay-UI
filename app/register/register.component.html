@@ -1,4 +1,36 @@
-﻿<div class="col-md-6 col-md-offset-3">
+﻿<div *ngIf="!isTermsConditionAccepted">
+        <div class="frame-content start-register container">
+                <div class="main">
+                    <h1 class="centerText">Let’s get your MasterPass</h1>
+                    <p class="centerText mainText">In just a few steps, you’ll be ready to shop with confidence.</p>
+                        <img class="masterPassImg" src="../assets/images/signup.png" alt="Start registration">    
+                </div>
+
+                <div class="welcomeMessage" style="display: none;">
+                    <p>Welcome to MasterPass.</p>
+                </div>
+
+                <div class="iAgreeSection">
+                    <ul class="termsList">
+                    <li>
+                        <input type="checkbox" id="agreedTC" [(ngModel)]="isAccepted" />
+                        <span>
+                        I hereby acknowledge to have read and understood the Cognizant MasterPass Terms and Conditions and Privacy Notice. I hereby provide my consent to Cognizant and MasterCard (i) to receive all notices related to the Cognizant MasterPass terms and conditions and Privacy Notice and (ii) to collect, share and use my data/ information for the purposes set out in the above Privacy Notice and terms and conditions, including but not limited to for the purposes of Data Analytics.
+                        </span>
+                        <br>
+                    </li>
+                    <li>
+                        <input type="checkbox" id="agreedOffers" name="agreedOffers"  >
+                        <span>I agree to receive special offers and promotions from MasterCard that are available on the wallet and keep me informed of the latest features.
+                        </span>
+                    </li>
+                    </ul>
+                    <div class="clearfix"> <button (click)="enableNext()" class="btn btn-primary sinnUpbtn pull-right" [disabled]="!isAccepted">SIGN UP</button> </div>   
+         </div>
+</div>
+
+<div *ngIf="isTermsConditionAccepted">
+<div  class="col-md-6 col-md-offset-3">
     <h2>Register</h2>
     <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
         <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
@@ -33,4 +65,5 @@
             <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
         </div>
     </form>
+</div>
 </div>

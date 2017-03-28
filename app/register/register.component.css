@@ -1,0 +1,27 @@
+.centerText{
+    text-align:center;
+}
+.mainText{
+    font-size:1.2em;
+}
+.masterPassImg{
+    display:table-cell;
+    vertical-align:middle;
+    margin:auto;
+    margin-bottom:10px;
+
+}
+.termsList{
+    list-style:none;
+}
+.termsList li{
+    padding-bottom:10px;
+}
+
+.sinnUpbtn{
+    color:#fff;
+    margin:25px 0 15px 0;
+}
+img.masterpassbuy {
+    width: 180px;
+}
