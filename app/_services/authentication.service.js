@@ -12,10 +12,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 require("rxjs/add/operator/map");
+var index_1 = require("../_models/index");
 var AuthenticationService = (function () {
     function AuthenticationService(http) {
         this.http = http;
         this.headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        this.customer = new index_1.Customer();
     }
     AuthenticationService.prototype.login = function (userName, password) {
         return this.http.post('http://localhost:8080/customer/login', JSON.stringify({ userName: userName, password: password }), { headers: this.headers })
