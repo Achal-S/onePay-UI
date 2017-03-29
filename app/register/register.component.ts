@@ -1,7 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { PersonalDetail} from '../_models/index';
-import { AlertService, UserService } from '../_services/index';
+import { PersonalDetail,SecurityChallenge} from '../_models/index';
+import { AlertService, UserService, SharedService} from '../_services/index';
 
 @Component({
     moduleId: module.id,
@@ -10,7 +10,7 @@ import { AlertService, UserService } from '../_services/index';
 })
 
 export class RegisterComponent {
-    model: PersonalDetail= new PersonalDetail();
+    model: PersonalDetail;
     loading = false;
     enableRegistrationForm : boolean;
     isTermsConditionAccepted:boolean;
@@ -31,11 +31,13 @@ export class RegisterComponent {
     constructor(
         private router: Router,
         private userService: UserService,
-        private alertService: AlertService) {
+        private alertService: AlertService,
+        private sharedServices:SharedService) {
             this.enableRegistrationForm= false;
             this.isTermsConditionAccepted= false;
             this.isAgreedOffers=false;
-
+            this.model = new PersonalDetail();
+            this.model.securityChallenge= new SecurityChallenge();
             this.errorMsg = ''
             this.statusPopUp = false;
             this.setSecurityQuestion();
@@ -75,6 +77,7 @@ export class RegisterComponent {
             this.questions.push('What is your first car?');               
             this.questions.push('Brand name of first watch?');           
             this.questions.push('What is the first movie you watched in cinema?');
+            
         }
     
         popUpStatus(status: boolean) {
@@ -93,13 +96,31 @@ export class RegisterComponent {
             this.userService.create(this.model)
                 .subscribe(
                     data => {
+                        this.userService.login(this.model.mobileNumber,this.model.password).subscribe(
+                                data => {
+                                this.sharedServices.customer = data;
+                                this.success = true;
+                                this.router.navigate(['/add-address']);
+                                },
+                                err=>{
+                            this.success = false;
+                            // Log errors if any
+                            this.popUpMessage = err;
+                            this.popUpShow = true;
+                            this.active = false;
+                            console.log(err);
+
+                                }
+                            );
+
                         this.alertService.success('Registration successful', true);
-                        this.router.navigate(['/login']);
+                        
                     },
                     error => {
                         this.alertService.error(error);
                         this.loading = false;
                     });
+
         }
     }
 }

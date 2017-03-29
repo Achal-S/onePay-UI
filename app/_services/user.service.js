@@ -31,7 +31,7 @@ var UserService = (function () {
         return this.http.get('/api/users/' + id, this.jwt()).map(function (response) { return response.json(); });
     };
     UserService.prototype.create = function (personalDetail) {
-        return this.http.post('http://localhost:8090/customer/register', personalDetail, { headers: this.headers }).map(function (response) { return response.json(); });
+        return this.http.post('http://localhost:8080/customer/register', personalDetail, { headers: this.headers }).map(function (response) { return response.json(); });
     };
     UserService.prototype.update = function (user) {
         return this.http.put('/api/users/' + user.customerId, user, this.jwt()).map(function (response) { return response.json(); });

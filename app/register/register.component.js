@@ -18,7 +18,6 @@ var RegisterComponent = (function () {
         this.router = router;
         this.userService = userService;
         this.alertService = alertService;
-        this.model = new index_1.PersonalDetail();
         this.loading = false;
         this.submitted = false; // keep track on whether form is submitted
         this.questions = [];
@@ -26,6 +25,8 @@ var RegisterComponent = (function () {
         this.enableRegistrationForm = false;
         this.isTermsConditionAccepted = false;
         this.isAgreedOffers = false;
+        this.model = new index_1.PersonalDetail();
+        this.model.securityChallenge = new index_1.SecurityChallenge();
         this.errorMsg = '';
         this.statusPopUp = false;
         this.setSecurityQuestion();
