@@ -1,69 +1,149 @@
-﻿<div *ngIf="!isTermsConditionAccepted">
-        <div class="frame-content start-register container">
-                <div class="main">
-                    <h1 class="centerText">Let’s get your MasterPass</h1>
-                    <p class="centerText mainText">In just a few steps, you’ll be ready to shop with confidence.</p>
-                        <img class="masterPassImg" src="../assets/images/signup.png" alt="Start registration">    
-                </div>
+﻿
+<div *ngIf="!enableRegistrationForm" class="frame-content start-register container">
+            <div class="main">
+                <h1 class="centerText">Let’s get your MasterPass</h1>
+                <p class="centerText mainText">In just a few steps, you’ll be ready to shop with confidence.</p>
+					<img class="masterPassImg" src="../assets/images/signup.png" alt="Start registration">
+           
+            </div>
 
-                <div class="welcomeMessage" style="display: none;">
-                    <p>Welcome to MasterPass.</p>
-                </div>
+            <div class="welcomeMessage" style="display: none;">
+                <p>Welcome to MasterPass.</p>
+            </div>
 
-                <div class="iAgreeSection">
-                    <ul class="termsList">
-                    <li>
-                        <input type="checkbox" id="agreedTC" [(ngModel)]="isAccepted" />
-                        <span>
-                        I hereby acknowledge to have read and understood the Cognizant MasterPass Terms and Conditions and Privacy Notice. I hereby provide my consent to Cognizant and MasterCard (i) to receive all notices related to the Cognizant MasterPass terms and conditions and Privacy Notice and (ii) to collect, share and use my data/ information for the purposes set out in the above Privacy Notice and terms and conditions, including but not limited to for the purposes of Data Analytics.
-                        </span>
-                        <br>
-                    </li>
-                    <li>
-                        <input type="checkbox" id="agreedOffers" name="agreedOffers"  >
-                        <span>I agree to receive special offers and promotions from MasterCard that are available on the wallet and keep me informed of the latest features.
-                        </span>
-                    </li>
-                    </ul>
-                    <div class="clearfix"> <button (click)="enableNext()" class="btn btn-primary sinnUpbtn pull-right" [disabled]="!isAccepted">SIGN UP</button> </div>   
-         </div>
+            <div class="iAgreeSection">
+                <ul class="termsList">
+                <li>
+                    <input type="checkbox" id="agreedTC" [(ngModel)]="isTermsConditionAccepted" />
+                    <span>
+                    I hereby acknowledge to have read and understood the Cognizant MasterPass Terms and Conditions and Privacy Notice. I hereby provide my consent to Cognizant and MasterCard (i) to receive all notices related to the Cognizant MasterPass terms and conditions and Privacy Notice and (ii) to collect, share and use my data/ information for the purposes set out in the above Privacy Notice and terms and conditions, including but not limited to for the purposes of Data Analytics.
+                    </span>
+                    <br>
+                </li>
+                <li>
+                    <input type="checkbox" id="agreedOffers" name="agreedOffers" [(ngModel)]="isAgreedOffers" #agreedOffer="ngModel" >
+                    <span>I agree to receive special offers and promotions from MasterCard that are available on the wallet and keep me informed of the latest features.
+                    </span>
+                </li>
+                </ul>
+            </div>
+            <div class="clearfix"> <button (click)="onNextClick()" class="btn btn-primary sinnUpbtn pull-right" [disabled]="!isTermsConditionAccepted">SIGN UP</button> </div>   
 </div>
 
-<div *ngIf="isTermsConditionAccepted">
-<div  class="col-md-6 col-md-offset-3">
-    <h2>Register</h2>
-    <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="firstName">First Name</label>
-            <input type="text" class="form-control" name="firstName" [(ngModel)]="model.firstName" #firstName="ngModel" required />
-            <div *ngIf="f.submitted && !firstName.valid" class="help-block">First Name is required</div>
+<div *ngIf="enableRegistrationForm" signup-page class="container">
+     
+     <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div signup-page-personal *ngIf="!personalDetailsFilled" class="personalDetailsContainer clearfix">
+        <div class="clearfix container-head">
+            <div class="pull-left">
+                 <p class="detailsHeading">Tell us about yourself</p>
+            </div>
+            <div class="progress-charm pull-right">              
+            </div>
         </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
-            <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" name="lastName" [(ngModel)]="model.lastName" #lastName="ngModel" required />
-            <div *ngIf="f.submitted && !lastName.valid" class="help-block">Last Name is required</div>
-        </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-            <label for="email">Email Id</label>
-            <input type="text" class="form-control" name="email" [(ngModel)]="model.emailAddress" #emailAddress="ngModel" required />
-            <div *ngIf="f.submitted && !email.valid" class="help-block">Username is required</div>
-        </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !mobileNumber.valid }">
-            <label for="mobile">Mobile Number</label>
-            <input type="text" class="form-control" name="mobileNumber" [(ngModel)]="model.mobileNumber" #mobileNumber="ngModel" required />
-            <div *ngIf="f.submitted && !mobileNumber.valid" class="help-block">Mobile Number is required</div>
-        </div>
-        <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !password.valid }">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" required />
-            <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-        </div>
+        <div class="frame-content">
+            <div class="field labelName">
+                <strong>What’s your name?</strong>
+			</div>
+            <div class="multi-field-wrap clearfix">
+                <div class="field halfwidth pull-left">
+                    <label class="form-label" for="first">
+                        First
+                    </label>
+                 <input type="text"  id="firstName" [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel"
+                        class="north-west-alt" placeholder="First Name" maxlength="20">
+                </div>
+                <div class="field halfwidth pull-left">
+                    <label class="form-label" for="last">Last</label>
+                 <input type="text"  id="lastName" [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel"
+                        class="north-west-alt" placeholder="Last Name" maxlength="20">
+                </div>
+            </div>
+            <div class="multi-field-wrap clearfix">
+                <div class="field halfwidth pull-left">
+					<label class="form-label" for="emailAddress">
+						Your email address
+					</label>
+                  
+                  <input type="email" class="north-west-alt" id="emailAddress" name="emailAddress" placeholder="Email" [(ngModel)]="model.emailAddress"
+                        #emailAddress="ngModel" required>  
+                 </div>
+                <div class="field halfwidth last combo-box phone pull-left">
+                        <label class="form-label" for="callingCode">
+                            Your mobile phone number
+                        </label>
+                        <input type="text" class="north-west-alt" id="phoneNumber" name="phoneNumber" placeholder="Phone Number" maxlength="10" required
+                        [(ngModel)]="model.mobileNumber" #mobileNumber="ngModel">
+                </div>       
+            </div>
+            <p class="below-fieldrow-text">You will use your email address or mobile number to sign in.</p>
+            <div class="multi-field-wrap clearfix">
+                <div class="field halfwidth pull-left password">
+                    <label class="form-label" for="password">
+                        Think of a new password
+                    </label>
+                    <input type="password" name="password" class="north-west-alt " id="password " placeholder="Password " required [(ngModel)]="model.password"
+                        #password="ngModel">
+                </div>
+                <!--<div class="field halfwidth pull-left repeat-password last">
+                    <label class="form-label" for="repeatPassword">
+                        Tell us your password again
+                    </label>
+                    <input type="password" class="north-west-alt" name="confirmPassword" id="confirmPassword " placeholder="Confirm Password "
+                        required [(ngModel)]="model.confirmPassword" #confirmPassword="ngModel">
+                </div>   -->
+            </div> 
+            <div class="clearfix">
+             <input type="button" class="btn btn-primary pull-right mar-sm" value="Next !" [disabled]="disableNext()" (click)="submitPersonalDetails()"/> 
+             </div>
+        </div>    
 
-        <div class="form-group">
-            <button [disabled]="loading" class="btn btn-primary">Register</button>
-            <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-            <a [routerLink]="['/login']" class="btn btn-link">Cancel</a>
-        </div>
+    </div>
+    <div singup-page-security *ngIf="personalDetailsFilled" class="securityContainer">
+            <div class="clearfix container-head">
+                <div class="pull-left">
+                    <p class="detailsHeading">Add security</p>
+                </div>
+                <div class="progress-charm pull-right nextProgress">
+                    
+                </div>
+            </div>
+            <div class="frame-content">
+                <div class="field fullwidth">
+                    <label class="form-label" for="securityQuestion">
+                        Pick your security question<br>
+                        <span class="secQnNote">You may occasionally be asked to answer this.</span>
+                    </label>
+                </div>
+                <select id="securityQuestion" [(ngModel)]="model.securityChallenge.question"
+                            name="securityQuestion" #securityQuestion="ngModel">
+                            <option *ngFor="let question of questions" [value]="question">{{question}}</option>
+                </select>
+                <!--<div >
+                    <ul>
+                     <li *ngFor="let question of questions">
+                    {{question.value}}
+                    </li>
+                     </ul>
+                </div>    -->
+
+                <div class="field fullwidth" id="textSecurityAnswer" >              
+                    <label class="form-label" for="securityQuestionAnswer">Security question's Answer'
+                    
+                    </label>
+                        <input type="text" id="secPassword" placeholder="Security Answer" [(ngModel)]="model.securityChallenge.answer"
+                        name="secPassword" #secPassword="ngModel"/>           
+                </div>
+            </div>
+            <div class="clearfix">
+                <div class="pull-right">
+                    <input type="button" class="btn btn-primary mar-sm" value="BACK" (click)="backToPersonalDetails()"/>
+                    <input type="submit" class="btn btn-success mar-sm" value="SUBMIT" [disabled]="!userForm.form.valid " />
+                </div>
+            </div>
+    </div> 
     </form>
-</div>
-</div>
+</div>  
+
+
+<!--<pop-up [hidden]='!popUpShow' [message]='popUpMessage' [statusPoPup]='statusPopUp' (popUpStatus)="popUpStatus($event)"></pop-up>-->

@@ -29,7 +29,7 @@ export class UserService {
     }
 
     create(personalDetail: PersonalDetail) {
-        return this.http.post('http://localhost:8090/customer/register', personalDetail,{ headers: this.headers }).map((response: Response) => response.json());
+        return this.http.post('http://localhost:8080/customer/register', personalDetail,{ headers: this.headers }).map((response: Response) => response.json());
     }
 
     update(user: Customer) {

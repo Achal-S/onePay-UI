@@ -8,8 +8,10 @@ import { Customer} from '../_models/index';
 export class AuthenticationService  {
      
     private headers = new Headers({ 'Content-Type': 'application/json' });
-  
-    constructor(private http: Http) { }
+  customer:Customer;
+    constructor(private http: Http) { 
+        this.customer= new Customer();
+    }
 
     login(userName: string, password: string) : Observable<Customer> {
         return this.http.post('http://localhost:8080/customer/login', JSON.stringify({ userName: userName, password: password }),{ headers: this.headers })

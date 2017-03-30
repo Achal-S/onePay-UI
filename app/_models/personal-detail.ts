@@ -1,6 +1,6 @@
 import { SecurityChallenge} from '../_models/index';
 export class PersonalDetail {
-    idmobileNumber: string;
+    mobileNumber: string;
     firstName: string;
     lastName: string;
     country: string;
